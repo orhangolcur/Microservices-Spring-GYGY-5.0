@@ -1,6 +1,14 @@
 spring:
     application:
         name: product-service
-
+    cloud:
+        stream:
+            bindings:
+                testEvent-out-0:
+                    destination: test-topic
+                    content-type: application/json
+            kafka:
+                binder:
+                    brokers: localhost:9092
 server:
     port: 8083
