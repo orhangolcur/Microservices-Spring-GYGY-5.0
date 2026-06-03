@@ -15,5 +15,10 @@ spring:
             kafka:
                 binder:
                     brokers: localhost:9092
+    datasource:
+        url: jdbc:postgresql://localhost:5433/products
+        username: postgres
+        password: test12345
+        driver-class-name: org.postgresql.Driver
 server:
     port: 8083
