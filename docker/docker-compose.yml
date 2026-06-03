@@ -76,6 +76,15 @@ services:
     volumes:
       - user-db-data:/var/lib/postgresql/data
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-gygy5
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+
 volumes:
   kafka-data:
   product-db-data:
