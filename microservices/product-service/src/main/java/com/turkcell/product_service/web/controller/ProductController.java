@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.turkcell.product_service.entity.OutboxEvent;
 import com.turkcell.product_service.entity.OutboxStatus;
+import com.turkcell.product_service.entity.TestClass;
 import com.turkcell.product_service.event.TestEvent;
 import com.turkcell.product_service.repository.OutboxRepository;
 
@@ -24,6 +25,11 @@ public class ProductController {
         this.objectMapper = objectMapper;
     }
 
+    @GetMapping("/test")
+    public TestClass test2() {
+        return new TestClass("Hello from Product-Service");
+    }
+
     @GetMapping("/hello")
     public String hello() {
         return "Hello Product-Service";
@@ -35,7 +41,7 @@ public class ProductController {
         UUID eventId = UUID.randomUUID();
         var event = new TestEvent(eventId, message, id);
 
-            // KAFKAYA bir event gidecekse, önce kayıt altına alınacak.
+        // KAFKAYA bir event gidecekse, önce kayıt altına alınacak.
         // Outbox -> XEvent,XTarihi,XTopic,XPayload
 
 
@@ -54,8 +60,6 @@ public class ProductController {
         outboxEvent.setPayload(toJson(event));
         outboxEvent.setStatus(OutboxStatus.PENDING);
         outboxEvent.setCreatedAt(Instant.now());
-
-        outboxRepository.save(outboxEvent);
 
         outboxRepository.save(outboxEvent);
 
