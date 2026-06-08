@@ -4,9 +4,9 @@ spring:
       definition: consumeTestEvent
     stream:
       bindings:
-        testEvent-out-0:
-          destination: test-topic 
-          content-type: application/json 
+        consumeTestEvent-in-0:
+          destination: test-topic
+          content-type: application/json
       kafka:
         binder:
           brokers: localhost:9092
