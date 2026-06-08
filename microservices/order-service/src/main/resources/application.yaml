@@ -1,6 +1,10 @@
 spring:
-    application:
-        name: order-service
+  application:
+    name: order-service
+  profiles:
+    active: dev
+  config:
+    import: "optional:configserver:http://localhost:8888"
 
 server:
-    port: 8082
+  port: 8082
