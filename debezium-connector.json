@@ -3,8 +3,8 @@
   "config": {
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
 
-    "database.hostname": "product-db",
-    "database.port": "5432",
+    "database.hostname": "host.docker.internal",
+    "database.port": "5433",
     "database.user": "postgres",
     "database.password": "test12345",
     "database.dbname": "products",

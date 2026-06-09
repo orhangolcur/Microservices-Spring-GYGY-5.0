@@ -22,6 +22,11 @@ public class OutboxPoller {
     }
 
     // ÖDEV: Burayı CDC ile (Debezium) değiştir.
+    // ÇÖZÜM: OutboxPoller devre dışı bırakıldı.
+    // Outbox polling sorumluluğu Debezium Kafka Connect connector'ına devredildi.
+    // Debezium, PostgreSQL WAL'ını izleyerek outbox tablosundaki her INSERT'i
+    // anında "outbox.event.Product" Kafka topic'ine yazar.
+    // Bkz: debezium-connector.json
     //@Scheduled(fixedDelay = 20000)
     @Transactional
     public void publishPendingEvents() {

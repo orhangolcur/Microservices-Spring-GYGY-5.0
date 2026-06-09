@@ -84,8 +84,6 @@ services:
       - "5433:5432" # sağ taraf daima uygulamanın kendi portu
     volumes:
       - product-db-data:/var/lib/postgresql/data
-    networks:
-      - kafka-net
 
   user-db:
     image: postgres:17
