@@ -5,7 +5,7 @@ spring:
     stream:
       bindings:
         consumeTestEvent-in-0:
-          destination: test-topic
+          destination: outbox.event.Product
           content-type: application/json
       kafka:
         binder:

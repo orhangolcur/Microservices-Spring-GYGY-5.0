@@ -51,7 +51,27 @@ services:
         condition: service_healthy
     networks:
       - kafka-net
- 
+  kafka-connect: # Debezium tek başına çalışmaz, Kafka'ya bağlanması gerekir. O yüzden burada tanımlıyoruz.
+    image: debezium/connect:2.5
+    container_name: kafka-connect
+    ports:
+      - "8084:8083"
+    environment:
+      BOOTSTRAP_SERVERS: kafka:19092        # ← internal listener
+      GROUP_ID: debezium-connect-group
+      CONFIG_STORAGE_TOPIC: debezium_configs
+      OFFSET_STORAGE_TOPIC: debezium_offsets
+      STATUS_STORAGE_TOPIC: debezium_status
+    depends_on:
+      kafka:
+        condition: service_healthy
+      product-db:
+        condition: service_started
+    networks:
+      - kafka-net        # kafka ile konuşmak için
+    # Not: product-db kafka-net'te değil, ama Docker'da
+    # container adıyla (product-db) erişim yine de çalışır
+    # çünkü aynı docker-compose dosyasındalar
   product-db:
     image: postgres:17
     container_name : product-db
@@ -59,10 +79,13 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: test12345
       POSTGRES_DB: products
+    command: ["postgres", "-c", "wal_level=logical"] # transaction log'unu okumak için.
     ports:
       - "5433:5432" # sağ taraf daima uygulamanın kendi portu
     volumes:
       - product-db-data:/var/lib/postgresql/data
+    networks:
+      - kafka-net
 
   user-db:
     image: postgres:17

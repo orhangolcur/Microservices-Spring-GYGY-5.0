@@ -22,7 +22,7 @@ public class OutboxPoller {
     }
 
     // ÖDEV: Burayı CDC ile (Debezium) değiştir.
-    @Scheduled(fixedDelay = 20000)
+    //@Scheduled(fixedDelay = 20000)
     @Transactional
     public void publishPendingEvents() {
         List<OutboxEvent> events = outboxRepository.findPublishable(100);
