@@ -3,7 +3,6 @@ package com.turkcell.product_service.polling;
 import java.time.Instant;
 import java.util.List;
 import org.springframework.cloud.stream.function.StreamBridge;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import com.turkcell.product_service.entity.OutboxEvent;
 import com.turkcell.product_service.entity.OutboxStatus;
