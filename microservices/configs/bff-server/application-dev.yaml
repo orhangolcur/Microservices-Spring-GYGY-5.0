@@ -1,0 +1,35 @@
+server:
+  port: 8090
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: bff-client
+            client-secret: THWcxxSMSCQYJquWktPaXw5bKhxAGO0B
+            authorization-grant-type: authorization_code
+            scope: openid,profile,email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8085/realms/microservices-gygy5
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: gateway-server
+              uri: lb://gateway-server
+              predicates:
+                - Path=/api/**
+              filters:
+                - TokenRelay

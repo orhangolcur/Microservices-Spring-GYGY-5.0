@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: bff-server
+  profiles:
+    active: dev
+  config:
+    import: optional:configserver:http://localhost:8888
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: bff-client
+            client-secret: REPLACE_WITH_SECRET
+            authorization-grant-type: authorization_code
+            scope: openid,profile,email
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8085/realms/microservices-gygy5
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: api-proxy
+              uri: http://localhost:8080
+              predicates:
+                - Path=/api/**
+              filters:
+                - TokenRelay=
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+server:
+  port: 8090
