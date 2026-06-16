@@ -1,0 +1,2 @@
+-- 1.000.000 adet rastgele Product kaydı
+INSERT INTO products (id, name, description, price, stock) SELECT gen_random_uuid(), 'Product-' || g, 'Açıklama metni #' || g || ' - rastgele üretilmiş ürün.', round((random() * 9999 + 1)::numeric, 2), floor(random() * 1000)::int FROM generate_series(1, 1000000) AS g;
