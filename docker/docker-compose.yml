@@ -132,11 +132,26 @@ services:
       - redis-data:/data           # verilerin container yeniden başlasa da kalması için
     command: ["redis-server", "--appendonly", "yes"]  # AOF kalıcılığı açık
 
+  # RedisInsight: Redis için web tabanlı yönetim/izleme arayüzü
+  redisinsight:
+    image: redis/redisinsight:latest   # RedisInsight'ın resmi web imajı
+    container_name: redisinsight
+    restart: unless-stopped
+    ports:
+      - "5540:5540"                # host -> redisinsight web UI (http://localhost:5540)
+    volumes:
+      - redisinsight-data:/data    # bağlantı ayarlarının kalıcı olması için
+    depends_on:
+      - redis                      # Redis ayağa kalkmadan başlamasın
+    # Not: networks tanımlı değil; redis ile aynı default ağda kalsın ki
+    # container adıyla (redis:6379) Redis'e erişebilsin
+
 volumes:
   kafka-data:
   product-db-data:
   user-db-data:
   redis-data:
+  redisinsight-data:
 
 networks:
   kafka-net:
