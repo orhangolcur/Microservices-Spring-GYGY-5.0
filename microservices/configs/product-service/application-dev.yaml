@@ -23,3 +23,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
+  # Redis bağlantı ayarları (docker-compose'taki redis servisi -> localhost:6379)
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  # Spring Cache backend'i olarak Redis kullanılacak
+  cache:
+    type: redis

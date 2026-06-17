@@ -2,8 +2,10 @@ package com.turkcell.product_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
+@EnableCaching // Spring Cache anotasyonlarını (@Cacheable, @CachePut, @CacheEvict) etkinleştirir
 //@EnableScheduling
 public class ProductServiceApplication {
 
